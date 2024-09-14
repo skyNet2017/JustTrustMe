@@ -11,15 +11,26 @@ android {
         versionName '.3'
     }
 
+    signingConfigs {
+        debug{}
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.debug
             minifyEnabled false
         }
     }
     productFlavors {
     }
+    lintOptions {
+        abortOnError false
+        // 防止在发布的时候出现因MissingTranslation导致Build Failed!
+        disable 'MissingTranslation'
+        checkReleaseBuilds false
+    }
 }
 
 dependencies {
-    provided fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
 }
